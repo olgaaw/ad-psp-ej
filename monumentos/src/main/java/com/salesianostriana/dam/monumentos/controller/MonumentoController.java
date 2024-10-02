@@ -1,51 +1,41 @@
 package com.salesianostriana.dam.monumentos.controller;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.salesianostriana.dam.monumentos.model.Monumento;
-import com.salesianostriana.dam.monumentos.repositories.MonumentoRepositorio;
-import com.salesianostriana.dam.monumentos.dto.MonumentoDto;
-import com.salesianostriana.dam.monumentos.dto.MonumentoDtoConverter;
+import com.salesianostriana.dam.monumentos.service.MonumentoService;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController //Controlador tipo REST. Los métodos devuelven datos directamente (JSON) como respuesta HTTP
 @RequiredArgsConstructor  //Genera constructor con arg
-@RequestMapping("/monumentos")  //Ruta base del controlador
+@RequestMapping("api/monumentos")
 public class MonumentoController {
     //inyección dependencias
-    private final MonumentoRepositorio monumentoRepositorio;
-    private final MonumentoDtoConverter monumentoDtoConverter;
+    @Autowired
+    private final MonumentoService monumentoService;
 
     //Lista con todos los monumentos
-    @GetMapping("/")
-    public ResponseEntity<?> index(){  // <?> indica que el tipo de dato del cuerpo de la respuesta es genérico o indefinido
-        List<Monumento> result = monumentoRepositorio.findAll();
-        if(result.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }else {
-            List<MonumentoDto> dtoList =
-                    result.stream()
-                            .map(monumentoDtoConverter::convertMonumento)
-                            .collect(Collectors.toList());
-            return ResponseEntity.ok(dtoList);
+    @GetMapping("/monumentos")
+    public ResponseEntity<List<Monumento>> todosMonumentos(){
+        List<Monumento> monumentos = monumentoService.findAll();
+        if (monumentos.isEmpty()){
+            return ResponseEntity.notFound().build(); //Si no encuentra ninguno me da un error 404
         }
-
+        return ResponseEntity.ok(monumentos); //Si encuentra la lista me devulve la lista de monumentos
     }
 
     //Buscar monumento por su id
     @GetMapping("/{id}")
-    public Monumento unMonumento(@PathVariable Long id) {
-        return monumentoRepositorio.findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Monumento con ID " + id + " no encontrado")); //Si no encuentra un monumento con el id indicado lanza una excepción estándar de Spring y responde con un código HTTP 404
+    public ResponseEntity<Monumento> unMonumento(@PathVariable Long id) {
+        return ResponseEntity.of(monumentoService.findById(id));
+
     }
+
 
     /*
     @PathVariable en Spring Boot permite extraer valores de la URL de una solicitud y pasarlos como parámetros a los métodos del controlador.
@@ -55,10 +45,10 @@ public class MonumentoController {
 
 
     //Crear un nuevo monumento
-    @PostMapping("/")
-    public ResponseEntity<Monumento> nuevoMonumento (@RequestBody Monumento monumento) { //Cuerpo de la solicitud HTTP contiene los datos de un nuevo objeto Monumento en formato JSON, que será convertido a una instancia de la clase Monumento.
-        Monumento mon = monumentoRepositorio.save(monumento);
-        return new ResponseEntity<Monumento>(mon, HttpStatus.CREATED);
+    @PostMapping("/monumento")
+    public ResponseEntity<Monumento> crearMonumento(@RequestBody Monumento monumento){
+        Monumento nuevo = monumentoService.save(monumento);
+        return ResponseEntity.status(201).body(nuevo);
     }
 
     /*
@@ -71,7 +61,7 @@ public class MonumentoController {
     //Actualizar monumento
     @PutMapping("/{id}")
     public ResponseEntity<Monumento> editarMonumento(@PathVariable Long id, @RequestBody Monumento monumento) {
-        return monumentoRepositorio.findById(id).map(m -> {
+        return monumentoService.findById(id).map(m -> {
             m.setNombreCiudad(monumento.getNombreCiudad());
             m.setCodigoPais(monumento.getCodigoPais());
             m.setNombrePais(monumento.getNombrePais());
@@ -82,18 +72,17 @@ public class MonumentoController {
             m.setImagen(monumento.getImagen());
 
             // Guardar los cambios y devolver el Monumento actualizado
-            return ResponseEntity.ok(monumentoRepositorio.save(m));
+            return ResponseEntity.ok(monumentoService.save(m));
         }).orElse(ResponseEntity.notFound().build());
     }
 
     //Eliminar monumento
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMonumento(@PathVariable Long id) {
-        return monumentoRepositorio.findById(id).map(m -> {
-            monumentoRepositorio.delete(m);  //Si se encuentra, eliminar el monumento
-            return ResponseEntity.noContent().build();  //Devolver 204 No Content
-        }).orElse(ResponseEntity.notFound().build());  //Si no se encuentra, devolver 404
-    }
+    /*@DeleteMapping("/{id}")
+    public ResponseEntity<Monumento> eliminarMonumento(@PathVariable Long id) {
+        return monumentoService.delete(id);
+
+
+    }*/
 
 
 }
