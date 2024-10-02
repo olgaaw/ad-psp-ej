@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.monumentos.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +15,10 @@ import java.util.List;
 @RequestMapping("api/monumentos")
 public class MonumentoController {
     //inyección dependencias
-    @Autowired
     private final MonumentoService monumentoService;
 
     //Lista con todos los monumentos
-    @GetMapping("/monumentos")
+    @GetMapping("")
     public ResponseEntity<List<Monumento>> todosMonumentos(){
         List<Monumento> monumentos = monumentoService.findAll();
         if (monumentos.isEmpty()){
@@ -77,12 +75,14 @@ public class MonumentoController {
     }
 
     //Eliminar monumento
-    /*@DeleteMapping("/{id}")
-    public ResponseEntity<Monumento> eliminarMonumento(@PathVariable Long id) {
-        return monumentoService.delete(id);
-
-
-    }*/
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarMonumento(@PathVariable Long id) {
+        if (monumentoService.findById(id).isPresent()) {
+            monumentoService.delete(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+    }
 
 }
