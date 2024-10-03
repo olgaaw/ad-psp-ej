@@ -80,9 +80,9 @@ public class MonumentoController {
         if (monumentoService.findById(id).isPresent()) {
             monumentoService.delete(id);
             return ResponseEntity.noContent().build(); // 204 No Content
-        } else {
-            return ResponseEntity.notFound().build(); // 404 Not Found
         }
+         return ResponseEntity.notFound().build(); // 404 Not Found
+
     }
 
 }

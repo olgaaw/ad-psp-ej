@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "12f16ee5-4fcf-4383-930d-fe0d63ac35c4",
+		"name": "Monumentos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38689358"
+	},
+	"item": [
+		{
+			"name": "NuevoMonumento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPais\" : \"ES\",\r\n    \"nombrePais\" : \"España\",\r\n    \"nombreCiudad\" : \"Cordoba\" ,\r\n    \"nombreMonumento\" : \"Mezquita\" ,\r\n    \"descripcion\" : \"descripcion descripcion descripcion\",\r\n    \"imagen\" : \"imagen imagen imagen\",\r\n    \"latitud\" : \"0000000\",\r\n    \"longitud\" : \"00000000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/monumentos/monumento",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"monumento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListaMonumentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonumentoId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/monumentos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarMonumento",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPais\" : \"ES\",\r\n    \"nombrePais\" : \"España\",\r\n    \"nombreCiudad\" : \"Cordoba actualizada\" ,\r\n    \"nombreMonumento\" : \"Mezquita de cordoba\" ,\r\n    \"descripcion\" : \"2 descripcion descripcion descripcion\",\r\n    \"imagen\" : \"imagen imagen imagen\",\r\n    \"latitud\" : \"0000000\",\r\n    \"longitud\" : \"00000000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/monumentos/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarMonumento",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/monumentos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monumentos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
