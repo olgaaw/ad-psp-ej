@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "9d4d33da-bcd4-4190-b746-5c0c0837e170",
+		"name": "Monumentos_v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38689358"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monumento/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monumento",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monumento/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monumento",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : 1 ,\r\n    \"codigoPais\" : \"FR\",\r\n    \"nombrePais\" : \"Francia\",\r\n    \"nombreCiudad\" : \"Paris\",\r\n    \"latitud\" : 48.8583701 ,\r\n    \"longitud\" : 2.2944813 ,\r\n    \"nombreMonumento\" : \"Torre Eiffel\",\r\n    \"descripcionMonumento\" : \"inicialmente llamada Tour de 300 mètres es una estructura de hierro pudelado diseñada inicialmente por los ingenieros civiles Maurice Koechlin y Émile Nouguier\",\r\n    \"imagenMonumento\" : \"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Eiffelturm.JPG/800px-Eiffelturm.JPG\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/monumento/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monumento",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monumento/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monumento",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}
