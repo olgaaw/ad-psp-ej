@@ -1,5 +1,13 @@
 package com.example.demo;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,12 +19,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/product/")
 @RequiredArgsConstructor
+@Tag(name = "Producto", description = "El controlador de producto")
 public class ProductController {
 
     //@Autowired
     private final ProductRepository productRepository;
 
+    @Operation(summary = "Obtiene todos los productos")
+    @ApiResponses(value = {
+            @ApiResponse (responseCode = "200",
+                    description = "Se han encontrado todos",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetProductListDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            [
+                                                {"id":1, "name" : "Laptop", "price" : 1234.56},
+                                                {"id" : 2, "name" : "Smartphone", "price" : 999.99},
+                                            ]
+                                            """
 
+                            )}
+                    )}
+            )
+    })
     @GetMapping
     public ResponseEntity<List<Product>> getAll(
             @RequestParam(required = false,

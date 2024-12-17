@@ -1,13 +1,17 @@
 package com.salesianostriana.ejerciciodto.apartado1;
 
+import com.salesianostriana.ejerciciodto.apartado1.dto.AlumnoDto;
 import com.salesianostriana.ejerciciodto.apartado1.model.Alumno;
 import com.salesianostriana.ejerciciodto.apartado1.model.Curso;
 import com.salesianostriana.ejerciciodto.apartado1.model.Direccion;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class MainAlumno {
-    public static void main(String[] args) {
+    @PostConstruct
+   public void init(){
 
         Direccion direccion = Direccion.builder()
                 .id(1L)
@@ -39,10 +43,9 @@ public class MainAlumno {
                 .curso(curso)
                 .build();
 
+        AlumnoDto alumnoDto = AlumnoDto.alumnoToDto(alumno);
 
-        System.out.println(alumno);
-
-
+        System.out.println(alumnoDto);
 
     }
 }

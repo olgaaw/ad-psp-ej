@@ -20,14 +20,12 @@ public class AlumnoDto {
     private Direccion direccion;
     private Curso curso;
 
-    public AlumnoDto alumnoToDto(Alumno alumno) {
+    public static AlumnoDto alumnoToDto(Alumno alumno) {
        return AlumnoDto.builder()
-               .id(alumno.getId())
                .nombre(alumno.getNombre())
                .apellido1(alumno.getApellido1())
                .apellido2(alumno.getApellido2())
                .email(alumno.getEmail())
-               .telefono(alumno.getTelefono())
                .direccion(alumno.getDireccion())
                .curso(alumno.getCurso())
                .build();
