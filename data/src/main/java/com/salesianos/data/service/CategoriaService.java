@@ -34,7 +34,7 @@ public class CategoriaService {
     public Categoria edit(Categoria categoria, Long id) {
         return categoriaRepository.findById(id)
                 .map(old -> {
-                    old.setNombreCategoria(categoria.getNombreCategoria());
+                    old.setNombre(categoria.getNombre());
                     return categoriaRepository.save(old);
 
                 }).orElseThrow(() -> new EntityNotFoundException("No hay categoria con ID "+ id));

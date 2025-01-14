@@ -23,7 +23,7 @@ public class Categoria {
     private Long id;
 
     @Column(length = 512)
-    private String nombreCategoria;
+    private String nombre;
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     @Builder.Default
