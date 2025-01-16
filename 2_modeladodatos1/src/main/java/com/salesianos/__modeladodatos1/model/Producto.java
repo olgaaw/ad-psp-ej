@@ -1,4 +1,4 @@
-package com.salesianos.asociaciones_pedidocliente.model;
+package com.salesianos.__modeladodatos1.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +15,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "cliente")
-public class Cliente {
+@Table(name = "producto")
+public class Producto {
     @Id @GeneratedValue
     private Long id;
 
@@ -24,24 +24,16 @@ public class Cliente {
     private String nombre;
 
     @Column
-    private String direccion;
-
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<Pedido> pedidos = new ArrayList<>();
+    private double pvp;
 
 
-    // Métodos helpers
+    @ManyToOne
+    @JoinColumn(name = "categoria_id",
+            foreignKey = @ForeignKey(name = "fk_categoria_producto"))
+    private Categoria categoria;
 
-    public void addPedido(Pedido p) {
-        p.setCliente(this);
-        this.getPedidos().add(p);
-    }
 
-    public void removePedido(Pedido p) {
-        this.getPedidos().remove(p);
-        p.setCliente(null);
-    }
+
 
     @Override
     public final boolean equals(Object o) {
@@ -50,15 +42,12 @@ public class Cliente {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Cliente cliente = (Cliente) o;
-        return getId() != null && Objects.equals(getId(), cliente.getId());
+        Producto producto = (Producto) o;
+        return getId() != null && Objects.equals(getId(), producto.getId());
     }
 
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
-
-
-
 }

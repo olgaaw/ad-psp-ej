@@ -1,4 +1,4 @@
-package com.salesianos.asociaciones_pedidocliente.model;
+package com.salesianos.__modeladodatos1.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,33 +15,33 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "cliente")
-public class Cliente {
-    @Id @GeneratedValue
+@Table(name = "categoria")
+public class Categoria {
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Column
     private String nombre;
 
-    @Column
-    private String direccion;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     @Builder.Default
-    private List<Pedido> pedidos = new ArrayList<>();
+    @ToString.Exclude
+    private List<Producto> productos = new ArrayList<>();
 
-
-    // Métodos helpers
-
-    public void addPedido(Pedido p) {
-        p.setCliente(this);
-        this.getPedidos().add(p);
+    public void addProducto(Producto p) {
+        p.setCategoria(this);
+        this.getProductos().add(p);
     }
 
-    public void removePedido(Pedido p) {
-        this.getPedidos().remove(p);
-        p.setCliente(null);
+
+    public void removeProducto(Producto p) {
+        this.getProductos().remove(p);
+        p.setCategoria(null);
     }
+
 
     @Override
     public final boolean equals(Object o) {
@@ -50,15 +50,12 @@ public class Cliente {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Cliente cliente = (Cliente) o;
-        return getId() != null && Objects.equals(getId(), cliente.getId());
+        Categoria categoria = (Categoria) o;
+        return getId() != null && Objects.equals(getId(), categoria.getId());
     }
 
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
-
-
-
 }
