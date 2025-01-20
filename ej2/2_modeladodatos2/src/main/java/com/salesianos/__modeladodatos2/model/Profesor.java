@@ -30,7 +30,7 @@ public class Profesor {
     @Column
     private double puntuacion;
 
-    @OneToMany (mappedBy = "profesor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "profesor", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
     private List<CursoOnline> cursos = new ArrayList<>();

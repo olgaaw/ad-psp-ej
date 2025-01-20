@@ -22,10 +22,13 @@ public class CursoOnline {
 
     private double puntuacion;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "profesor_id",
             foreignKey = @ForeignKey(name = "fk_curso_profesor"))
     private Profesor profesor;
+
+    @OneToMany()
+
 
     @Override
     public final boolean equals(Object o) {
