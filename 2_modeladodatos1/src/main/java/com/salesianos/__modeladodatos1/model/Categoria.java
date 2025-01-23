@@ -31,6 +31,7 @@ public class Categoria {
     @ToString.Exclude
     private List<Producto> productos = new ArrayList<>();
 
+
     public void addProducto(Producto p) {
         p.setCategoria(this);
         this.getProductos().add(p);
