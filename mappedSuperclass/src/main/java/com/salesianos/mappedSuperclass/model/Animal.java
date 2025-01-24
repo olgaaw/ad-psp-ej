@@ -1,37 +1,28 @@
-package com.salesianos.__modeladodatos1.model;
+package com.salesianos.mappedSuperclass.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
+@MappedSuperclass
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "producto")
-public class Producto {
-    @Id @GeneratedValue
+public class Animal {
+    @Id
+    @GeneratedValue
     private Long id;
 
-    @Column
     private String nombre;
 
-    @Column
-    private double pvp;
-
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id",
-            foreignKey = @ForeignKey(name = "fk_categoria_producto"))
-    private Categoria categoria;
-
-
-
+    private char sexo;
 
     @Override
     public final boolean equals(Object o) {
@@ -40,8 +31,8 @@ public class Producto {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Producto producto = (Producto) o;
-        return getId() != null && Objects.equals(getId(), producto.getId());
+        Animal animal = (Animal) o;
+        return getId() != null && Objects.equals(getId(), animal.getId());
     }
 
     @Override

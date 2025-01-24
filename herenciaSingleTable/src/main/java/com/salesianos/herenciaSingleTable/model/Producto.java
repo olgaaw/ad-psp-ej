@@ -1,4 +1,4 @@
-package com.salesianos.__modeladodatos1.model;
+package com.salesianos.herenciaSingleTable.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,29 +9,19 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Table(name = "producto")
+@DiscriminatorColumn(name="tipo")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Producto {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
-
-    @Column
     private String nombre;
-
-    @Column
-    private double pvp;
-
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id",
-            foreignKey = @ForeignKey(name = "fk_categoria_producto"))
-    private Categoria categoria;
-
-
-
+    private String descripcion;
+    private double precio;
 
     @Override
     public final boolean equals(Object o) {
@@ -48,4 +38,6 @@ public class Producto {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+
 }
